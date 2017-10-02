@@ -95,10 +95,11 @@ defmodule GaApiClient.ReportRequest do
   @doc ~S"""
   Adds dimension filters to report
 
-    iex> %GaApiClient.ReportRequest {} |> GaApiClient.ReportRequest.dimension_filter_clauses([{:country, :equal, "Finland", false}])
+    iex> %GaApiClient.ReportRequest {} |> GaApiClient.ReportRequest.dimension_filter_clauses(:and, [{:country, :equal, "Finland", false}])
     %GaApiClient.ReportRequest {
       dimension_filter_clauses: [
         %GaApiClient.ReportRequest.DimensionFilterClause {
+          operator: :and,
           filters: [
             %GaApiClient.ReportRequest.DimensionFilter{dimension: :country, filter: "EXACT", negate: false, value: "Finland"}
           ]
@@ -107,14 +108,16 @@ defmodule GaApiClient.ReportRequest do
     }
   """
 
-  def dimension_filter_clauses(report, filters_clause) when is_list(filters_clause) do
+  def dimension_filter_clauses(report, operator \\ :or, filters_clause)
+  def dimension_filter_clauses(report, operator, filters_clause) when is_list(filters_clause) do
     %{ report |
-       dimension_filter_clauses: DimensionFilterClause.merge(report.dimension_filter_clauses,
-                                                     filters_clause)
+       dimension_filter_clauses: DimensionFilterClause.merge(
+         report.dimension_filter_clauses, operator, filters_clause
+       )
     }
   end
 
-  def dimension_filter_clauses(report, filter) do
+  def dimension_filter_clauses(report, operator, filter) do
     dimension_filter_clauses(report, [filter])
   end
 end

@@ -1,16 +1,16 @@
 defmodule GaApiClient.ReportRequest.DimensionFilterClause do
   alias GaApiClient.ReportRequest.DimensionFilter
 
-  defstruct filters: []
+  defstruct filters: [], operator: :or
 
-  def merge(list, filters_list) when is_list(filters_list) do
+  def merge(list, operator, filters_list) when is_atom(operator) and is_list(filters_list) do
     filters = filters_list
-              |> Enum.reduce([], fn (filter_tuple, acc) -> merge(acc, filter_tuple) end)
+              |> Enum.reduce([], fn (filter_tuple, acc) -> add_filters(acc, filter_tuple) end)
 
-    [%__MODULE__{ filters: filters } | list]
+    [%__MODULE__{ filters: filters, operator: operator } | list]
   end
 
-  def merge(list, {dimension, filter, value, negate}) do
+  defp add_filters(list, {dimension, filter, value, negate}) do
     DimensionFilter.merge(list, dimension, filter, value, negate)
   end
 end
