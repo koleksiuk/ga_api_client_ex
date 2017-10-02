@@ -2,12 +2,11 @@ defmodule GaApiClient.ReportRequest do
   @default_page_size 10_000
 
   defstruct view_id: nil, date_ranges: [], dimensions: [], metrics: [],
-            metric_filters: [], dimension_filters: [], page_token: nil,
+            metric_filters: [], dimension_filter_clauses: [], page_token: nil,
             page_size: @default_page_size, include_empty: false,
             hide_totals: false, hide_value_ranges: false
 
-  alias GaApiClient.ReportRequest.Dimension
-  alias GaApiClient.ReportRequest.Metric
+  alias GaApiClient.ReportRequest.{Dimension, DimensionFilterClause, Metric}
 
   @doc ~S"""
     Returns ReportRequest struct with view_id
@@ -91,5 +90,31 @@ defmodule GaApiClient.ReportRequest do
     Enum.reduce(metrics, report, fn(metric, report) ->
       metrics(report, metric)
     end)
+  end
+
+  @doc ~S"""
+  Adds dimension filters to report
+
+    iex> %GaApiClient.ReportRequest {} |> GaApiClient.ReportRequest.dimension_filter_clauses([{:country, :equal, "Finland", false}])
+    %GaApiClient.ReportRequest {
+      dimension_filter_clauses: [
+        %GaApiClient.ReportRequest.DimensionFilterClause {
+          filters: [
+            %GaApiClient.ReportRequest.DimensionFilter{dimension: :country, filter: "EXACT", negate: false, value: "Finland"}
+          ]
+        }
+      ]
+    }
+  """
+
+  def dimension_filter_clauses(report, filters_clause) when is_list(filters_clause) do
+    %{ report |
+       dimension_filter_clauses: DimensionFilterClause.merge(report.dimension_filter_clauses,
+                                                     filters_clause)
+    }
+  end
+
+  def dimension_filter_clauses(report, filter) do
+    dimension_filter_clauses(report, [filter])
   end
 end
