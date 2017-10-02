@@ -106,6 +106,38 @@ defmodule GaApiClient.ReportRequest do
         }
       ]
     }
+
+    iex> %GaApiClient.ReportRequest {} |> GaApiClient.ReportRequest.dimension_filter_clauses(:and, {:country, :equal, "Finland", false})
+    %GaApiClient.ReportRequest {
+      dimension_filter_clauses: [
+        %GaApiClient.ReportRequest.DimensionFilterClause {
+          operator: :and,
+          filters: [
+            %GaApiClient.ReportRequest.DimensionFilter{dimension: :country, filter: "EXACT", negate: false, value: "Finland"}
+          ]
+        }
+      ]
+    }
+
+
+    iex> %GaApiClient.ReportRequest {} |> GaApiClient.ReportRequest.dimension_filter_clauses(:and, {:country, :equal, "Finland", false}) |> GaApiClient.ReportRequest.dimension_filter_clauses([{:country, :equal, "Sweden", false}, {:city, :regex, "Stock", true}])
+    %GaApiClient.ReportRequest {
+      dimension_filter_clauses: [
+        %GaApiClient.ReportRequest.DimensionFilterClause {
+          operator: :and,
+          filters: [
+            %GaApiClient.ReportRequest.DimensionFilter{dimension: :country, filter: "EXACT", negate: false, value: "Finland"}
+          ]
+        },
+        %GaApiClient.ReportRequest.DimensionFilterClause {
+          operator: :or,
+          filters: [
+            %GaApiClient.ReportRequest.DimensionFilter{dimension: :country, filter: "EXACT", negate: false, value: "Sweden"},
+            %GaApiClient.ReportRequest.DimensionFilter{dimension: :city, filter: "REGEXP", negate: true, value: "Stock"}
+          ]
+        }
+      ]
+    }
   """
 
   def dimension_filter_clauses(report, operator \\ :or, filters_clause)
@@ -118,6 +150,6 @@ defmodule GaApiClient.ReportRequest do
   end
 
   def dimension_filter_clauses(report, operator, filter) do
-    dimension_filter_clauses(report, [filter])
+    dimension_filter_clauses(report, operator, [filter])
   end
 end
