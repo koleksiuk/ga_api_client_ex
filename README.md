@@ -1,6 +1,8 @@
+[![Build Status](https://travis-ci.org/koleksiuk/ga_api_client_ex.svg?branch=master)](https://travis-ci.org/koleksiuk/ga_api_client_ex)
+
 # GaApiClient
 
-**TODO: Add description**
+Google Analytics Core Reporting V4 API Client for Elixir
 
 ## Installation
 
