@@ -4,5 +4,10 @@ elixir:
 otp_release:
   - 20.0
 
+cache:
+  directories:
+    - _build
+    - deps
+
 notifications:
   email: false
