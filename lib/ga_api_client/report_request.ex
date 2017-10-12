@@ -33,7 +33,7 @@ defmodule GaApiClient.ReportRequest do
     %GaApiClient.ReportRequest { dimensions: [:region, :country] }
 
     iex> %GaApiClient.ReportRequest { dimensions: [:region] } |> GaApiClient.ReportRequest.dimensions(:region)
-    %GaApiClient.ReportRequest { dimensions: [:region] }
+    %GaApiClient.ReportRequest { dimensions: [:region, :region] }
 
     iex> %GaApiClient.ReportRequest {} |> GaApiClient.ReportRequest.dimensions([:country, :city])
     %GaApiClient.ReportRequest {
@@ -42,7 +42,7 @@ defmodule GaApiClient.ReportRequest do
 
     iex> %GaApiClient.ReportRequest { dimensions: [:city] } |> GaApiClient.ReportRequest.dimensions([:country, :city])
     %GaApiClient.ReportRequest {
-      dimensions: [:city, :country]
+      dimensions: [:city, :country, :city]
     }
 
     iex> %GaApiClient.ReportRequest { dimensions: [:city] } |> GaApiClient.ReportRequest.dimensions([:country, :network_location])
@@ -70,7 +70,7 @@ defmodule GaApiClient.ReportRequest do
     %GaApiClient.ReportRequest { metrics: [:sessions, :pageviews] }
 
     iex> %GaApiClient.ReportRequest { metrics: [:sessions] } |> GaApiClient.ReportRequest.metrics(:sessions)
-    %GaApiClient.ReportRequest { metrics: [:sessions] }
+    %GaApiClient.ReportRequest { metrics: [:sessions, :sessions] }
 
     iex> %GaApiClient.ReportRequest {} |> GaApiClient.ReportRequest.metrics([:pageviews, :sessions])
     %GaApiClient.ReportRequest {
@@ -79,7 +79,7 @@ defmodule GaApiClient.ReportRequest do
 
     iex> %GaApiClient.ReportRequest { metrics: [:sessions] } |> GaApiClient.ReportRequest.metrics([:pageviews, :sessions])
     %GaApiClient.ReportRequest {
-      metrics: [:sessions, :pageviews]
+      metrics: [:sessions, :pageviews, :sessions]
     }
 
     iex> %GaApiClient.ReportRequest { metrics: [:sessions] } |> GaApiClient.ReportRequest.metrics([:pageviews, :users])

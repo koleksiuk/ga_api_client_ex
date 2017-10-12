@@ -2,7 +2,7 @@ defmodule GaApiClient.ReportRequest.DimensionFilter do
   defstruct dimension: nil, filter: nil, value: nil, negate: false
 
   def merge(list, dimension, filter, value, negate) do
-    (list ++ [build_filter(dimension, filter, value, negate)]) |> Enum.uniq
+    (list ++ [build_filter(dimension, filter, value, negate)])
   end
 
   defp build_filter(dimension, filter, value, negate) when (is_atom(dimension) or is_binary(dimension))
