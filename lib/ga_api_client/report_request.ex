@@ -6,7 +6,8 @@ defmodule GaApiClient.ReportRequest do
             page_size: @default_page_size, include_empty: false,
             hide_totals: false, hide_value_ranges: false
 
-  alias GaApiClient.ReportRequest.{Dimension, DimensionFilterClause, Metric}
+  alias GaApiClient.ReportRequest.{DateRange, Dimension, DimensionFilterClause,
+                                   Metric}
 
   @doc ~S"""
     Returns ReportRequest struct with view_id
@@ -16,6 +17,10 @@ defmodule GaApiClient.ReportRequest do
   """
   def build(view_id) do
     %__MODULE__{ view_id: view_id }
+  end
+
+  def date_range(report, start_date, end_date) do
+    %{ report | date_ranges: DateRange.merge(report.date_ranges, {start_date, end_date}) }
   end
 
   @doc ~S"""
