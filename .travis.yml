@@ -6,7 +6,6 @@ otp_release:
 
 cache:
   directories:
-    - _build
     - deps
 
 notifications:
