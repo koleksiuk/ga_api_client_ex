@@ -7,6 +7,7 @@ defmodule GaApiClient.Mixfile do
      elixir: "~> 1.4",
      build_embedded: Mix.env == :prod,
      start_permanent: Mix.env == :prod,
+     preferred_cli_env: [espec: :test],
      deps: deps()]
   end
 
@@ -28,6 +29,8 @@ defmodule GaApiClient.Mixfile do
   #
   # Type "mix help deps" for more examples and options
   defp deps do
-    []
+    [
+      {:espec, "~> 1.5.1", only: :test}
+    ]
   end
 end
