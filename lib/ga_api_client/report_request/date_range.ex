@@ -1,4 +1,5 @@
 defmodule GaApiClient.ReportRequest.DateRange do
+  @derive Jason.Encoder
   defstruct start_date: nil, end_date: nil
 
   @doc ~S"""

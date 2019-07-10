@@ -30,6 +30,9 @@ defmodule GaApiClient.Mixfile do
   # Type "mix help deps" for more examples and options
   defp deps do
     [
+      {:tesla, "~> 1.2.0"},
+      {:hackney, "~> 1.14.0"},
+      {:jason, ">= 1.0.0"},
       {:espec, "~> 1.7.0", only: :test}
     ]
   end

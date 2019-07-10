@@ -1,10 +1,11 @@
 defmodule GaApiClient.ReportRequest do
   @default_page_size 10_000
 
+  @derive Jason.Encoder
+
   defstruct view_id: nil, date_ranges: [], dimensions: [], metrics: [],
-            metric_filters: [], dimension_filter_clauses: [], page_token: nil,
-            page_size: @default_page_size, include_empty: false,
-            hide_totals: false, hide_value_ranges: false
+            metric_filter_clauses: [], dimension_filter_clauses: [], page_token: nil,
+            page_size: @default_page_size, hide_totals: false, hide_value_ranges: false
 
   alias GaApiClient.ReportRequest.{DateRange, Dimension, DimensionFilterClause,
                                    Metric}
@@ -144,7 +145,6 @@ defmodule GaApiClient.ReportRequest do
       ]
     }
   """
-
   def dimension_filter_clauses(report, operator \\ :or, filters_clause)
   def dimension_filter_clauses(report, operator, filters_clause) when is_list(filters_clause) do
     %{ report |

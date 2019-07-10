@@ -1,4 +1,5 @@
 defmodule GaApiClient.ReportRequest.DimensionFilter do
+  @derive Jason.Encoder
   defstruct dimension: nil, filter: nil, value: nil, negate: false
 
   def merge(list, dimension, filter, value, negate) do
