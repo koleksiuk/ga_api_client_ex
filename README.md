@@ -15,7 +15,19 @@ def deps do
 end
 ```
 
+## Running tests
+
+`mix espec`
+
+## Building simple query
+
+iex> report_request = GaApiClient.ReportRequest.build("12345") # view id
+iex> report_requests = GaApiClient.ReportRequests.build(report_request)
+iex> profile = %GaApiClient.Profile{ access_token: "foobar" }
+iex> GaApiClient.Connection.client(profile) |> GaApiClient.Connection.get_batch(report_requests)
+
+## Docs
+
 Documentation can be generated with [ExDoc](https://github.com/elixir-lang/ex_doc)
 and published on [HexDocs](https://hexdocs.pm). Once published, the docs can
 be found at [https://hexdocs.pm/ga_api_client](https://hexdocs.pm/ga_api_client).
-
