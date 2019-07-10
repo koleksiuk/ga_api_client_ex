@@ -1,6 +1,7 @@
 defmodule GaApiClient.ReportRequestSpec do
   use ESpec
 
+  doctest GaApiClient.ReportRequest
   alias GaApiClient.ReportRequest
 
   let :view_id, do: "1234"
